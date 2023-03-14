@@ -28,9 +28,9 @@ impl UpdateDraw for Root {
         self.elements.draw(params);
     }
 
-    fn update(&mut self, _params: &UpdateParams) -> DoneRendering {
+    fn update(&mut self, _params: &UpdateParams) -> DoneDrawing {
         self.elements.update()
-        // DoneRendering::No
+        // DoneDrawing::No
     }
 }
 
@@ -54,15 +54,15 @@ impl Elements {
         }
     }
 
-    fn update(&mut self) -> DoneRendering {
+    fn update(&mut self) -> DoneDrawing {
         let current_element_done_rendering = self.current_element.update().to_bool();
         if current_element_done_rendering && self.remaining_elements.is_empty() {
-            DoneRendering::Yes
+            DoneDrawing::Yes
         } else if current_element_done_rendering {
             self.current_element = self.remaining_elements.remove(0);
-            DoneRendering::No
+            DoneDrawing::No
         } else {
-            DoneRendering::No
+            DoneDrawing::No
         }
     }
 

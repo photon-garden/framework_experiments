@@ -1,7 +1,7 @@
 use super::*;
 use crate::colors::*;
 use crate::prelude::extensions::path2::*;
-use crate::prelude::DoneRendering;
+use crate::prelude::DoneDrawing;
 use crate::prelude::Point2;
 use nannou::color::Hsl;
 use std::cell::{Cell, RefCell};
@@ -28,16 +28,16 @@ fn regular_polygon() -> RegularPolygons {
 }
 
 pub struct RegularPolygons {
-    start_time: RefCell<Option<Instant>>,
-    num_drawn: Cell<usize>,
-    num_repeats: usize,
+    // start_time: RefCell<Option<Instant>>,
+    // num_drawn: Cell<usize>,
+    // num_repeats: usize,
+    // has_drawn: Cell<bool>,
+    // average_duration_of_each_draw_micros: Cell<Option<f64>>,
     resolution_generator: BoxedGenerator<usize>,
     radius_generator: BoxedSignalGenerator<f32>,
     radius_is_constant_for_each_polygon: bool,
     center_generator: BoxedGenerator<Point2>,
     stroke_weight_generator: BoxedGenerator<f32>,
-    has_drawn: Cell<bool>,
-    average_duration_of_each_draw_micros: Cell<Option<f64>>,
     color_generator: BoxedGenerator<Hsl>,
 }
 
@@ -174,24 +174,20 @@ impl DrawingMut for RegularPolygons {
         self.num_drawn.set(num_drawn + num_draws_this_frame);
     }
 
-    fn update(&mut self) -> DoneRendering {
+    fn update(&mut self) -> DoneDrawing {
         // Make sure that draw runs before update.
         let has_drawn = self.has_drawn.get();
         if !has_drawn {
-            return DoneRendering::No;
+            return DoneDrawing::No;
         }
 
         let num_drawn = self.num_drawn.get();
         if num_drawn >= self.num_repeats {
             let elapsed = self.start_time.borrow().unwrap().elapsed();
             println!("Elapsed: {:?}", elapsed);
-            DoneRendering::Yes
+            DoneDrawing::Yes
         } else {
-            DoneRendering::No
+            DoneDrawing::No
         }
     }
 }
-
-const micros_in_second: f64 = 1_000_000.0;
-const frames_per_second: f64 = 60.0;
-const target_frame_duration_micros: f64 = micros_in_second / frames_per_second;

@@ -45,38 +45,38 @@ pub struct UpdateParams<'a> {
     pub rand: &'a Rand,
 }
 
-pub enum DoneRendering {
+pub enum DoneDrawing {
     Yes,
     No,
 }
 
-impl DoneRendering {
-    pub fn all_done(values: Vec<DoneRendering>) -> DoneRendering {
+impl DoneDrawing {
+    pub fn all_done(values: Vec<DoneDrawing>) -> DoneDrawing {
         let all_done = values.iter().all(|value| value.to_bool());
         all_done.into()
     }
 
     pub fn to_bool(&self) -> bool {
         match self {
-            DoneRendering::Yes => true,
-            DoneRendering::No => false,
+            DoneDrawing::Yes => true,
+            DoneDrawing::No => false,
         }
     }
 }
 
-impl From<bool> for DoneRendering {
+impl From<bool> for DoneDrawing {
     fn from(is_done: bool) -> Self {
         if is_done {
-            DoneRendering::Yes
+            DoneDrawing::Yes
         } else {
-            DoneRendering::No
+            DoneDrawing::No
         }
     }
 }
 
 pub trait UpdateDraw {
-    fn update(&mut self, _params: &UpdateParams) -> DoneRendering {
-        DoneRendering::No
+    fn update(&mut self, _params: &UpdateParams) -> DoneDrawing {
+        DoneDrawing::No
     }
 
     fn draw(&self, params: &DrawParams);

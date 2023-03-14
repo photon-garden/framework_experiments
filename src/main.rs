@@ -59,7 +59,7 @@ fn update(app: &App, model: &mut Model, _update: Update) {
     //     rand: &model.rand,
     // };
 
-    if let DoneRendering::Yes = model.drawing.update() {
+    if let DoneDrawing::Yes = model.drawing.update() {
         println!("Done drawing.");
         model.snapshot.capture_frame(app);
         model.done_rendering = true;

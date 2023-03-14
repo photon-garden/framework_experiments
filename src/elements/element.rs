@@ -42,19 +42,19 @@ impl Element {
         }
     }
 
-    pub fn update(&mut self) -> DoneRendering {
+    pub fn update(&mut self) -> DoneDrawing {
         let has_drawn = self.has_drawn.get();
         if !has_drawn {
-            return DoneRendering::No;
+            return DoneDrawing::No;
         }
 
         let new_atoms_to_draw = self.all_atoms.take_to_vec(self.num_atoms_to_draw_at_once);
 
         if new_atoms_to_draw.is_empty() {
-            DoneRendering::Yes
+            DoneDrawing::Yes
         } else {
             self.atoms_to_draw = Cell::new(new_atoms_to_draw);
-            DoneRendering::No
+            DoneDrawing::No
         }
     }
 }
