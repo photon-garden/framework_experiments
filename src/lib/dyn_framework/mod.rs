@@ -34,7 +34,7 @@ pub use usize_generator::*;
 pub fn draw() -> RegularPolygons {
     regular_polygons()
         .repeat(10_000)
-        .resolution(16)
+        .resolution(24)
         .stroke_weight(0.001)
         .color(
             repeated_colors()
@@ -42,15 +42,17 @@ pub fn draw() -> RegularPolygons {
                 .color_picker(81, 113, 142, 255),
         )
         .radius_is_constant_for_each_polygon(false)
-        .radius(sine().frequency(1.0).amplitude_range(0.003..=0.009))
-        .center(
-            grid_xy()
-                .x_resolution(100)
-                .y_resolution(100)
-                .map(|point, rand| {
-                    let x_jitter = rand.zero_to_one().denormalize(0.01, 0.02);
-                    let y_jitter = rand.zero_to_one().denormalize(0.01, 0.02);
-                    point + pt2(x_jitter, y_jitter)
-                }),
-        )
+        .radius(sine().frequency(2.0).amplitude_range(0.003..=0.012))
+        .center(center())
+}
+
+fn center() -> impl IntoPointGenerator {
+    grid_xy()
+        .x_resolution(10)
+        .y_resolution(10)
+        .map(|point, rand| {
+            let x_jitter = rand.zero_to_one().denormalize(0.00, 0.00);
+            let y_jitter = rand.zero_to_one().denormalize(0.00, 0.00);
+            point + pt2(x_jitter, y_jitter)
+        })
 }
