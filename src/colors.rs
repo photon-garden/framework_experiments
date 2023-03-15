@@ -6,7 +6,7 @@ pub fn soft_white() -> Hsl {
 }
 
 pub fn soft_black() -> Hsl {
-    Colors::color_picker(26, 26, 22, 255).into()
+    Colors::color_picker(26, 26, 22, 255)
 }
 
 pub struct Colors {}

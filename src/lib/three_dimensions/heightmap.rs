@@ -274,8 +274,8 @@ mod tests {
     #[test]
     fn surface_normal_for_slope_rising_to_the_east() {
         let heightmap = Heightmap::new(3, |point| point.x);
-        let normal = heightmap.surface_normal_at(&pt2(0.5, 0.5));
-        let expected_normal = vec3(0.5, 1.0, 0.0).normalize();
+        let _normal = heightmap.surface_normal_at(&pt2(0.5, 0.5));
+        let _expected_normal = vec3(0.5, 1.0, 0.0).normalize();
 
         // assert_eq!(normal, expected_normal);
         // panic!();
@@ -284,8 +284,8 @@ mod tests {
     #[test]
     fn surface_normal_for_slope_rising_to_the_south() {
         let heightmap = Heightmap::new(3, |point| point.y);
-        let normal = heightmap.surface_normal_at(&pt2(0.5, 0.5));
-        let expected_normal = vec3(0.0, 1.0, 0.5).normalize();
+        let _normal = heightmap.surface_normal_at(&pt2(0.5, 0.5));
+        let _expected_normal = vec3(0.0, 1.0, 0.5).normalize();
 
         // assert_eq!(normal, expected_normal);
         // panic!();

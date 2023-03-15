@@ -12,7 +12,7 @@ impl<T> OptionExtension<T> for Option<T> {
         Predicate: Fn(&T) -> bool,
     {
         match self {
-            Some(value) => predicate(&value),
+            Some(value) => predicate(value),
             None => false,
         }
     }

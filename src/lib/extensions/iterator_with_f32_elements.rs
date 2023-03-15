@@ -11,7 +11,7 @@ where
     fn average(&mut self) -> f32 {
         let mut total = 0.0;
         let mut num_elements = 0;
-        while let Some(value) = self.next() {
+        for value in self {
             num_elements += 1;
             total += value;
         }

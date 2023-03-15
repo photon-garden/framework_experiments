@@ -115,7 +115,7 @@ impl LindenmayerSystem {
     fn replace_token(&self, model: &Model, current_branch: &Branch, token: &Token) -> Vec<Token> {
         match &token.name {
             TokenName::Branch(child_branch) => {
-                let replacement_tokens = self.replace_tokens_in_branch(model, &*child_branch);
+                let replacement_tokens = self.replace_tokens_in_branch(model, child_branch);
                 vec![self.branch(
                     child_branch.depth,
                     child_branch.rand.clone(),
@@ -254,7 +254,7 @@ impl Branch {
                 let name = &token.name;
                 match name {
                     TokenName::Branch(boxed_branch) => {
-                        let branch = &*boxed_branch;
+                        let branch = boxed_branch;
                         Some(branch)
                     }
                     _ => None,

@@ -52,7 +52,7 @@ impl Streamline {
     }
 
     pub fn from_points(
-        other_streamlines: &mut StreamlineCollection,
+        _other_streamlines: &mut StreamlineCollection,
         min_distance_for_seed_points: NormalizedF32,
         min_distance_for_growth_points: NormalizedF32,
         seed_point: Point2,
@@ -60,16 +60,14 @@ impl Streamline {
         x_range: RangeInclusive<f32>,
         y_range: RangeInclusive<f32>,
     ) -> Streamline {
-        let new_streamline = Streamline {
+        Streamline {
             seed_point,
             points,
             min_distance_for_seed_points,
             min_distance_for_growth_points,
             x_range,
             y_range,
-        };
-
-        new_streamline
+        }
     }
 
     pub fn valid_seed_points_iter<'a>(

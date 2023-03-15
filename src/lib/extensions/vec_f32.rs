@@ -7,7 +7,7 @@ pub trait VecF32Extension {
 
 impl VecF32Extension for Vec<f32> {
     fn normalize(&self) -> Self {
-        let first = self.get(0);
+        let first = self.first();
 
         if first.is_none() {
             return vec![];

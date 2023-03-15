@@ -220,7 +220,6 @@ impl F32Extension for f32 {
     fn shoulder(&self, shoulder_length: f32) -> f32 {
         let plateau_start = shoulder_length;
         let plateau_end = 1.0 - shoulder_length;
-        let plateau_domain = plateau_start..=plateau_end;
 
         let location = if *self < plateau_start {
             Plateau::Climbing
