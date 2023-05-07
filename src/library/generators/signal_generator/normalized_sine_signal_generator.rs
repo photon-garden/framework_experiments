@@ -10,7 +10,7 @@ pub fn sine() -> NormalizedSineSignalGenerator {
 
 pub struct NormalizedSineSignalGenerator {
     frequency: f32,
-    amplitude_range: RangeInclusive<f32>,
+    amplitude: RangeInclusive<f32>,
     phase: f32,
 }
 
@@ -18,7 +18,7 @@ impl NormalizedSineSignalGenerator {
     pub fn new() -> Self {
         Self {
             frequency: 1.0,
-            amplitude_range: 0.0..=1.0,
+            amplitude: 0.0..=1.0,
             phase: 0.0,
         }
     }
@@ -28,8 +28,8 @@ impl NormalizedSineSignalGenerator {
         self
     }
 
-    pub fn amplitude_range(mut self, amplitude_range: RangeInclusive<f32>) -> Self {
-        self.amplitude_range = amplitude_range;
+    pub fn amplitude(mut self, range: RangeInclusive<f32>) -> Self {
+        self.amplitude = range;
         self
     }
 
@@ -48,6 +48,6 @@ impl SignalGenerator for NormalizedSineSignalGenerator {
             .times(self.frequency)
             .plus(self.phase)
             .normalized_sin()
-            .denormalize_to_range(&self.amplitude_range)
+            .denormalize_to_range(&self.amplitude)
     }
 }

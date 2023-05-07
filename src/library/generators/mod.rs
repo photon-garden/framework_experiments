@@ -7,6 +7,9 @@ pub use f32_generator::*;
 mod generator;
 pub use generator::*;
 
+mod map_generator;
+pub use map_generator::*;
+
 mod point_generator;
 pub use point_generator::*;
 
