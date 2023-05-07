@@ -17,8 +17,8 @@ pub fn create(_params: CreateArtworkParams) -> RegularPolygons {
                 .color_picker(164, 222, 251, 255),
         )
         // .radius_is_constant_for_each_polygon(false)
-        // .radius(radius)
-        .smart_radius(|_rand, xy: Point2| xy.x.denormalize(0.003, 0.019))
+        .radius(radius)
+        .smart_radius(|xy: Point2| xy.x.denormalize(0.003, 0.019))
         .center(center())
         .polygon_is_filled(flip_coin(0.5))
 }
