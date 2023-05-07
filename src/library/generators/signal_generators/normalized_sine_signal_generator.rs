@@ -2,7 +2,6 @@ use super::*;
 use crate::prelude::NormalizedF32;
 use crate::prelude::Rand;
 use nannou::math::ConvertAngle;
-use std::ops::RangeInclusive;
 
 pub fn sine() -> NormalizedSineSignalGenerator {
     NormalizedSineSignalGenerator::new()
@@ -10,7 +9,6 @@ pub fn sine() -> NormalizedSineSignalGenerator {
 
 pub struct NormalizedSineSignalGenerator {
     frequency: f32,
-    amplitude: RangeInclusive<f32>,
     phase: f32,
 }
 
@@ -18,18 +16,12 @@ impl NormalizedSineSignalGenerator {
     pub fn new() -> Self {
         Self {
             frequency: 1.0,
-            amplitude: 0.0..=1.0,
             phase: 0.0,
         }
     }
 
     pub fn frequency(mut self, frequency: f32) -> Self {
         self.frequency = frequency;
-        self
-    }
-
-    pub fn amplitude(mut self, range: RangeInclusive<f32>) -> Self {
-        self.amplitude = range;
         self
     }
 
@@ -48,6 +40,5 @@ impl SignalGenerator for NormalizedSineSignalGenerator {
             .times(self.frequency)
             .plus(self.phase)
             .normalized_sin()
-            .denormalize_to_range(&self.amplitude)
     }
 }

@@ -9,15 +9,12 @@ pub trait SignalGenerator {
     // it could be some kind of generic context argument?
     fn generate(&mut self, rand: &Rand, progress: NormalizedF32) -> Self::Output;
 
-    fn map<Mapper, NewOutput>(self, mapper: Mapper) -> MapSignalGenerator<Self, Mapper, NewOutput>
+    fn map<Mapper, NewOutput>(self, mapper: Mapper) -> MapSignalGenerator<Self, NewOutput>
     where
         Self: Sized,
-        Mapper: Fn(Self::Output, &Rand, NormalizedF32) -> NewOutput,
+        Mapper: Fn(Self::Output, &Rand, NormalizedF32) -> NewOutput + 'static,
     {
-        MapSignalGenerator {
-            signal_generator: self,
-            mapper,
-        }
+        MapSignalGenerator::new(self, mapper)
     }
 }
 
