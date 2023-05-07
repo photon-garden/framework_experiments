@@ -42,12 +42,9 @@ pub trait F32SignalGeneratorExtension: SignalGenerator<Output = f32> + Sized {
         })
     }
 
-    fn denormalize(self, denormalized_range: RangeInclusive<f32>) -> MapSignalGenerator<Self, f32> {
-        let start = *denormalized_range.start();
-        let end = *denormalized_range.end();
-
+    fn denormalize(self, new_start: f32, new_end: f32) -> MapSignalGenerator<Self, f32> {
         self.map(move |output: f32, _rand: &Rand, _progress: NormalizedF32| {
-            output.denormalize(start, end)
+            output.denormalize(new_start, new_end)
         })
     }
 }

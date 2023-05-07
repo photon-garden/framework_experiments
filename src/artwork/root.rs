@@ -11,7 +11,7 @@ pub fn create(_params: CreateArtworkParams) -> RegularPolygons {
                 .color_picker(254, 162, 151, 255),
         )
         .radius_is_constant_for_each_polygon(false)
-        .radius(sine().frequency(1.0).denormalize(0.003..=0.019))
+        .radius(sine().frequency(1.0).denormalize(0.003, 0.019))
         .center(center())
 }
 
