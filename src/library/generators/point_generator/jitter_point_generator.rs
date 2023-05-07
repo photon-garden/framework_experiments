@@ -21,38 +21,3 @@ impl Generator for JitterPointGenerator {
         pt2(x, y)
     }
 }
-
-pub trait MakePointGeneratorsJitterable: Generator<Output = Point2> + 'static {
-    fn jitter(self) -> JitterPointGenerator;
-    fn x_jitter(self, x_amount: impl IntoF32Generator) -> JitterPointGenerator;
-    fn y_jitter(self, y_amount: impl IntoF32Generator) -> JitterPointGenerator;
-}
-
-impl<G> MakePointGeneratorsJitterable for G
-where
-    G: Generator<Output = Point2> + 'static,
-{
-    fn jitter(self) -> JitterPointGenerator {
-        JitterPointGenerator {
-            point_generator: Box::new(self),
-            x_amount: 0.01.into_f32_generator(),
-            y_amount: 0.01.into_f32_generator(),
-        }
-    }
-
-    fn x_jitter(self, x_amount: impl IntoF32Generator) -> JitterPointGenerator {
-        JitterPointGenerator {
-            point_generator: Box::new(self),
-            x_amount: x_amount.into_f32_generator(),
-            y_amount: 0.01.into_f32_generator(),
-        }
-    }
-
-    fn y_jitter(self, y_amount: impl IntoF32Generator) -> JitterPointGenerator {
-        JitterPointGenerator {
-            point_generator: Box::new(self),
-            x_amount: 0.01.into_f32_generator(),
-            y_amount: y_amount.into_f32_generator(),
-        }
-    }
-}
