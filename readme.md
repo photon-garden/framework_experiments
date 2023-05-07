@@ -1,3 +1,3 @@
-# Recreating Muriel Cooper's The Mathematical Sciences
+# Framework experiments
 
-Code for recreating Muriel Cooper's book cover for "The Mathematical Sciences."
+Working out a high-level framework for generative art in Rust.
