@@ -3,14 +3,14 @@ use crate::prelude::*;
 pub fn regular_polygons() -> RegularPolygons {
     RegularPolygons {
         resolution_generator: 3.into_usize_generator(),
-        radius_generator: 0.001.into_signal_generator(),
+        // radius_generator: 0.001.into_signal_generator(),
         center_generator: pt2(0.0, 0.0).into_point_generator(),
         stroke_weight_generator: 0.001.into_f32_generator(),
         color_generator: Box::<OneColorGenerator>::new(soft_black().into()),
         num_repeats: 1,
         background_color: soft_white(),
         polygon_is_filled_generator: false.into_bool_generator(),
-        smart_radius_generator: (|_xy: Point2| 0.001).into_smart_generator(),
+        smart_radius_generator: 0.001.into_box(),
     }
 }
 
@@ -20,7 +20,7 @@ fn regular_polygon() -> RegularPolygons {
 
 pub struct RegularPolygons {
     resolution_generator: UsizeGenerator,
-    radius_generator: F32SignalGenerator,
+    // radius_generator: F32SignalGenerator,
     center_generator: Point2Generator,
     stroke_weight_generator: F32Generator,
     color_generator: HslGenerator,
@@ -46,10 +46,10 @@ impl RegularPolygons {
         self
     }
 
-    pub fn radius(mut self, radius_generator: impl IntoF32SignalGenerator) -> Self {
-        self.radius_generator = radius_generator.into_signal_generator();
-        self
-    }
+    // pub fn radius(mut self, radius_generator: impl IntoF32SignalGenerator) -> Self {
+    //     self.radius_generator = radius_generator.into_signal_generator();
+    //     self
+    // }
 
     pub fn center(mut self, center_generator: impl IntoPointGenerator) -> Self {
         self.center_generator = center_generator.into_point_generator();
@@ -92,9 +92,9 @@ impl Artwork for RegularPolygons {
         let stroke_weight = self.stroke_weight_generator.generate(rand);
 
         let path =
-            crate::prelude::Path2::regular_polygon(&center, resolution, |normalized_angle| {
+            crate::prelude::Path2::regular_polygon(&center, resolution, |_normalized_angle| {
                 // self.radius_generator.generate(rand, normalized_angle)
-                self.smart_radius_generator.generate(center)
+                self.smart_radius_generator.generate(rand, center)
             });
 
         let color = self.color_generator.generate(rand);
