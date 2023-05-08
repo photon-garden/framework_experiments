@@ -16,7 +16,7 @@ pub fn create(_params: CreateArtworkParams) -> RegularPolygons {
                 .color_picker(254, 162, 151, 255)
                 .color_picker(164, 222, 251, 255),
         )
-        .smart_radius(radius())
+        .radius(radius())
         .center(center())
         .polygon_is_filled(flip_coin(0.5))
 }
