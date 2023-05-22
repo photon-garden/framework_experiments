@@ -22,5 +22,8 @@ pub use smart_generator::*;
 pub mod smart_bool_generator;
 pub use smart_bool_generator::*;
 
+pub mod smart_color_generators;
+pub use smart_color_generators::*;
+
 pub mod usize_smart_generator;
 pub use usize_smart_generator::*;

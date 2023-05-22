@@ -10,7 +10,7 @@ pub fn regular_polygons() -> RegularPolygons {
         stroke_weight_generator: 0.001.into_smart_generator(),
         polygon_is_filled_generator: false.into_smart_generator(),
         radius_generator: 0.001.into_smart_generator(),
-        color_generator: Box::<OneColorGenerator>::new(soft_black().into()),
+        color_generator: soft_black().into_smart_generator(),
     }
 }
 
@@ -22,7 +22,7 @@ pub struct RegularPolygons {
     resolution_generator: BoxedSmartGenerator<(), usize>,
     center_generator: BoxedSmartGenerator<(), Point2>,
     stroke_weight_generator: BoxedSmartGenerator<(), f32>,
-    color_generator: HslGenerator,
+    color_generator: BoxedSmartGenerator<(), Hsl>,
     num_repeats: usize,
     background_color: Hsl,
     polygon_is_filled_generator: BoxedSmartGenerator<(), bool>,
@@ -58,8 +58,8 @@ impl RegularPolygons {
         self
     }
 
-    pub fn color(mut self, color_generator: impl IntoBoxedColorGenerator) -> RegularPolygons {
-        self.color_generator = color_generator.into_color_generator();
+    pub fn color(mut self, color_generator: impl IntoSmartGenerator<(), Hsl>) -> RegularPolygons {
+        self.color_generator = color_generator.into_smart_generator();
         self
     }
 
@@ -93,7 +93,7 @@ impl Artwork for RegularPolygons {
                 self.radius_generator.generate(rand, center)
             });
 
-        let color = self.color_generator.generate(rand);
+        let color = self.color_generator.generate(rand, ());
 
         let polygon_is_filled = self.polygon_is_filled_generator.generate(rand, ());
 
