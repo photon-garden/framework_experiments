@@ -1,6 +1,9 @@
 use crate::prelude::*;
 use std::marker::PhantomData;
 
+// Sometimes you want a generator to return the same value for every call within a single
+// draw, but a different value *between* draws. Crystalizing lets you do that.
+
 pub struct SmartCrystallizedGenerator<SmartGen, Input, Output>
 where
     SmartGen: SmartGenerator<Input, Output>,
