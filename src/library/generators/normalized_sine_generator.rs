@@ -1,16 +1,16 @@
 use crate::prelude::*;
 use nannou::math::ConvertAngle;
 
-pub fn smart_sine() -> NormalizedSineSmartGenerator {
-    NormalizedSineSmartGenerator::new()
+pub fn sine() -> NormalizedSineGenerator {
+    NormalizedSineGenerator::new()
 }
 
-pub struct NormalizedSineSmartGenerator {
+pub struct NormalizedSineGenerator {
     frequency: f32,
     phase: f32,
 }
 
-impl NormalizedSineSmartGenerator {
+impl NormalizedSineGenerator {
     pub fn new() -> Self {
         Self {
             frequency: 1.0,
@@ -29,7 +29,7 @@ impl NormalizedSineSmartGenerator {
     }
 }
 
-impl SmartGenerator<NormalizedF32, NormalizedF32> for NormalizedSineSmartGenerator {
+impl Generator<NormalizedF32, NormalizedF32> for NormalizedSineGenerator {
     fn generate(&mut self, _rand: &Rand, progress: NormalizedF32) -> NormalizedF32 {
         progress
             .turns_to_rad()

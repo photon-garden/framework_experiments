@@ -1,7 +1,7 @@
 use crate::prelude::*;
 
-pub fn smart_grid_xy() -> SmartGridPointGenerator {
-    SmartGridPointGenerator {
+pub fn grid_xy() -> GridPointGenerator {
+    GridPointGenerator {
         x_resolution: 4,
         y_resolution: 4,
         x_index: 0,
@@ -10,7 +10,7 @@ pub fn smart_grid_xy() -> SmartGridPointGenerator {
     }
 }
 
-pub struct SmartGridPointGenerator {
+pub struct GridPointGenerator {
     x_resolution: usize,
     y_resolution: usize,
     x_index: usize,
@@ -18,7 +18,7 @@ pub struct SmartGridPointGenerator {
     traverse: Traverse,
 }
 
-impl SmartGenerator<(), Point2> for SmartGridPointGenerator {
+impl Generator<(), Point2> for GridPointGenerator {
     fn generate(&mut self, _rand: &Rand, _input: ()) -> Point2 {
         let x = self.x_index as f32 / (self.x_resolution - 1) as f32;
         let y = self.y_index as f32 / (self.y_resolution - 1) as f32;
@@ -51,7 +51,7 @@ impl SmartGenerator<(), Point2> for SmartGridPointGenerator {
     }
 }
 
-impl SmartGridPointGenerator {
+impl GridPointGenerator {
     pub fn x_resolution(mut self, x_resolution: usize) -> Self {
         self.x_resolution = x_resolution;
         self

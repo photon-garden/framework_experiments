@@ -1,23 +1,23 @@
 use crate::prelude::*;
 use std::marker::PhantomData;
 
-pub struct FilterSmartGenerator<SmartGen, Filter, Input, Output>
+pub struct FilterGenerator<Gen, Filter, Input, Output>
 where
-    SmartGen: SmartGenerator<Input, Output>,
-    Filter: Fn(FilterParams<SmartGen, Input, Output>) -> bool,
+    Gen: Generator<Input, Output>,
+    Filter: Fn(FilterParams<Gen, Input, Output>) -> bool,
 {
-    generator: SmartGen,
+    generator: Gen,
     filter: Filter,
     input: PhantomData<Input>,
     output: PhantomData<Output>,
 }
 
-impl<SmartGen, Filter, Input, Output> FilterSmartGenerator<SmartGen, Filter, Input, Output>
+impl<Gen, Filter, Input, Output> FilterGenerator<Gen, Filter, Input, Output>
 where
-    SmartGen: SmartGenerator<Input, Output>,
-    Filter: Fn(FilterParams<SmartGen, Input, Output>) -> bool,
+    Gen: Generator<Input, Output>,
+    Filter: Fn(FilterParams<Gen, Input, Output>) -> bool,
 {
-    pub fn new(generator: SmartGen, filter: Filter) -> Self {
+    pub fn new(generator: Gen, filter: Filter) -> Self {
         Self {
             generator,
             filter,
@@ -27,11 +27,11 @@ where
     }
 }
 
-impl<SmartGen, Filter, Input, Output> SmartGenerator<Input, Output>
-    for FilterSmartGenerator<SmartGen, Filter, Input, Output>
+impl<Gen, Filter, Input, Output> Generator<Input, Output>
+    for FilterGenerator<Gen, Filter, Input, Output>
 where
-    SmartGen: SmartGenerator<Input, Output>,
-    Filter: Fn(FilterParams<SmartGen, Input, Output>) -> bool,
+    Gen: Generator<Input, Output>,
+    Filter: Fn(FilterParams<Gen, Input, Output>) -> bool,
     Input: Clone,
 {
     fn generate(&mut self, rand: &Rand, input: Input) -> Output {
@@ -51,16 +51,16 @@ where
         }
 
         panic!(
-            "FilterSmartGenerator.generator.generate() failed to generate a value that passes the filter after {num_tries} iterations."
+            "FilterGenerator.generator.generate() failed to generate a value that passes the filter after {num_tries} iterations."
         );
     }
 }
 
-pub struct FilterParams<'a, SmartGen, Input, Output>
+pub struct FilterParams<'a, Gen, Input, Output>
 where
-    SmartGen: SmartGenerator<Input, Output>,
+    Gen: Generator<Input, Output>,
 {
-    pub generator: &'a SmartGen,
+    pub generator: &'a Gen,
     pub input: &'a Input,
     pub output: &'a Output,
     pub rand: &'a Rand,

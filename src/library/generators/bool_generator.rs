@@ -1,22 +1,22 @@
 use crate::prelude::*;
 
-impl SmartGenerator<(), bool> for bool {
+impl Generator<(), bool> for bool {
     fn generate(&mut self, _rand: &Rand, _input: ()) -> bool {
         *self
     }
 }
 
-pub fn smart_flip_coin(probability_of_true: f32) -> SmartUniformRandomBoolGenerator {
-    SmartUniformRandomBoolGenerator {
+pub fn flip_coin(probability_of_true: f32) -> UniformRandomBoolGenerator {
+    UniformRandomBoolGenerator {
         probability_of_true,
     }
 }
 
-pub struct SmartUniformRandomBoolGenerator {
+pub struct UniformRandomBoolGenerator {
     probability_of_true: f32,
 }
 
-impl SmartGenerator<(), bool> for SmartUniformRandomBoolGenerator {
+impl Generator<(), bool> for UniformRandomBoolGenerator {
     fn generate(&mut self, rand: &Rand, _input: ()) -> bool {
         rand.flip_coin(self.probability_of_true)
     }

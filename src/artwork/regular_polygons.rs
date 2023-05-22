@@ -5,12 +5,12 @@ pub fn regular_polygons() -> RegularPolygons {
         num_repeats: 1,
         background_color: soft_white(),
         // Generators
-        resolution_generator: 3.into_smart_generator(),
-        center_generator: pt2(0.5, 0.5).into_smart_generator(),
-        stroke_weight_generator: 0.001.into_smart_generator(),
-        polygon_is_filled_generator: false.into_smart_generator(),
-        radius_generator: 0.001.into_smart_generator(),
-        color_generator: soft_black().into_smart_generator(),
+        resolution_generator: 3.into_generator(),
+        center_generator: pt2(0.5, 0.5).into_generator(),
+        stroke_weight_generator: 0.001.into_generator(),
+        polygon_is_filled_generator: false.into_generator(),
+        radius_generator: 0.001.into_generator(),
+        color_generator: soft_black().into_generator(),
     }
 }
 
@@ -19,14 +19,14 @@ fn regular_polygon() -> RegularPolygons {
 }
 
 pub struct RegularPolygons {
-    resolution_generator: BoxedSmartGenerator<(), usize>,
-    center_generator: BoxedSmartGenerator<(), Point2>,
-    stroke_weight_generator: BoxedSmartGenerator<(), f32>,
-    color_generator: BoxedSmartGenerator<(), Hsl>,
+    resolution_generator: BoxedGenerator<(), usize>,
+    center_generator: BoxedGenerator<(), Point2>,
+    stroke_weight_generator: BoxedGenerator<(), f32>,
+    color_generator: BoxedGenerator<(), Hsl>,
     num_repeats: usize,
     background_color: Hsl,
-    polygon_is_filled_generator: BoxedSmartGenerator<(), bool>,
-    radius_generator: BoxedSmartGenerator<(), f32>,
+    polygon_is_filled_generator: BoxedGenerator<(), bool>,
+    radius_generator: BoxedGenerator<(), f32>,
 }
 
 impl RegularPolygons {
@@ -40,39 +40,36 @@ impl RegularPolygons {
         self
     }
 
-    pub fn resolution(mut self, resolution_generator: impl IntoSmartGenerator<(), usize>) -> Self {
-        self.resolution_generator = resolution_generator.into_smart_generator();
+    pub fn resolution(mut self, resolution_generator: impl IntoGenerator<(), usize>) -> Self {
+        self.resolution_generator = resolution_generator.into_generator();
         self
     }
 
-    pub fn center(mut self, center_generator: impl IntoSmartGenerator<(), Point2>) -> Self {
-        self.center_generator = center_generator.into_smart_generator();
+    pub fn center(mut self, center_generator: impl IntoGenerator<(), Point2>) -> Self {
+        self.center_generator = center_generator.into_generator();
         self
     }
 
-    pub fn stroke_weight(
-        mut self,
-        stroke_weight_generator: impl IntoSmartGenerator<(), f32>,
-    ) -> Self {
-        self.stroke_weight_generator = stroke_weight_generator.into_smart_generator();
+    pub fn stroke_weight(mut self, stroke_weight_generator: impl IntoGenerator<(), f32>) -> Self {
+        self.stroke_weight_generator = stroke_weight_generator.into_generator();
         self
     }
 
-    pub fn color(mut self, color_generator: impl IntoSmartGenerator<(), Hsl>) -> RegularPolygons {
-        self.color_generator = color_generator.into_smart_generator();
+    pub fn color(mut self, color_generator: impl IntoGenerator<(), Hsl>) -> RegularPolygons {
+        self.color_generator = color_generator.into_generator();
         self
     }
 
     pub fn polygon_is_filled(
         mut self,
-        polygon_is_filled_generator: impl IntoSmartGenerator<(), bool>,
+        polygon_is_filled_generator: impl IntoGenerator<(), bool>,
     ) -> RegularPolygons {
-        self.polygon_is_filled_generator = polygon_is_filled_generator.into_smart_generator();
+        self.polygon_is_filled_generator = polygon_is_filled_generator.into_generator();
         self
     }
 
-    pub fn radius(mut self, radius_generator: impl IntoSmartGenerator<(), f32>) -> RegularPolygons {
-        self.radius_generator = radius_generator.into_smart_generator();
+    pub fn radius(mut self, radius_generator: impl IntoGenerator<(), f32>) -> RegularPolygons {
+        self.radius_generator = radius_generator.into_generator();
         self
     }
 }

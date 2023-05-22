@@ -5,23 +5,23 @@ use std::marker::PhantomData;
 // typically generates a new value every time it's called. But a crystallized generator only
 // generates a new value once per draw call.
 
-pub struct SmartCrystallizedGenerator<SmartGen, Input, Output>
+pub struct CrystallizedGenerator<Gen, Input, Output>
 where
-    SmartGen: SmartGenerator<Input, Output>,
+    Gen: Generator<Input, Output>,
     Output: Clone,
 {
-    generator: SmartGen,
+    generator: Gen,
     last_draw_index: usize,
     previous_output: Option<Output>,
     input: PhantomData<Input>,
 }
 
-impl<SmartGen, Input, Output> SmartCrystallizedGenerator<SmartGen, Input, Output>
+impl<Gen, Input, Output> CrystallizedGenerator<Gen, Input, Output>
 where
-    SmartGen: SmartGenerator<Input, Output>,
+    Gen: Generator<Input, Output>,
     Output: Clone,
 {
-    pub fn new(generator: SmartGen) -> Self {
+    pub fn new(generator: Gen) -> Self {
         Self {
             generator,
             last_draw_index: 0,
@@ -45,16 +45,15 @@ where
     }
 }
 
-impl<SmartGen, Input, Output> SmartGenerator<Input, Output>
-    for SmartCrystallizedGenerator<SmartGen, Input, Output>
+impl<Gen, Input, Output> Generator<Input, Output> for CrystallizedGenerator<Gen, Input, Output>
 where
-    SmartGen: SmartGenerator<Input, Output>,
+    Gen: Generator<Input, Output>,
     Output: Clone,
 {
     fn generate(&mut self, rand: &Rand, input: Input) -> Output {
         self.update_if_in_new_draw_call(rand, input);
         self.previous_output
             .clone()
-            .expect("There's a bug in SmartCrystallizedGenerator. previous_output was None, but should have been set in update_if_in_new_draw_call.")
+            .expect("There's a bug in CrystallizedGenerator. previous_output was None, but should have been set in update_if_in_new_draw_call.")
     }
 }
