@@ -50,9 +50,10 @@ fn center() -> impl IntoGenerator<(), Point2> {
 
             let likelihood = average_distance
                 .normalize(0.0, max_distance)
-                .ease_out_quart()
+                .ease_out_quart() // This repeated ease_out_quart() causes the points to be more clustered.
                 .ease_out_quart()
                 .invert();
+
             params.rand.flip_coin(likelihood)
         })
         .save_outputs(points)
