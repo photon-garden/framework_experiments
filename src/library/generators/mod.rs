@@ -1,29 +1,32 @@
-pub mod bool_generators;
-pub use bool_generators::*;
+pub mod f32_smart_generator;
+pub use f32_smart_generator::*;
 
-pub mod color_generator;
-pub use color_generator::*;
+pub mod filter_smart_generator;
+pub use filter_smart_generator::*;
 
-pub mod crystallized_generator;
-pub use crystallized_generator::*;
+pub mod map_input_smart_generator;
+pub use map_input_smart_generator::*;
 
-pub mod f32_generator;
-pub use f32_generator::*;
+pub mod map_output_smart_generator;
+pub use map_output_smart_generator::*;
 
-pub mod generator;
-pub use generator::*;
+pub mod normalized_sine_smart_generator;
+pub use normalized_sine_smart_generator::*;
 
-pub mod map_generator;
-pub use map_generator::*;
+pub mod smart_crystallized_generator;
+pub use smart_crystallized_generator::*;
 
-pub mod point_generators;
-pub use point_generators::*;
+pub mod smart_point_generators;
+pub use smart_point_generators::*;
 
-pub mod signal_generators;
-pub use signal_generators::*;
+pub mod smart_generator;
+pub use smart_generator::*;
 
-pub mod smart_generators;
-pub use smart_generators::*;
+pub mod smart_bool_generator;
+pub use smart_bool_generator::*;
 
-pub mod usize_generator;
-pub use usize_generator::*;
+pub mod smart_color_generators;
+pub use smart_color_generators::*;
+
+pub mod usize_smart_generator;
+pub use usize_smart_generator::*;

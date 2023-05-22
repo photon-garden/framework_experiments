@@ -63,3 +63,12 @@ where
         (self)(rand, input)
     }
 }
+
+// impl<SmartGen, Input, Output> SmartGenerator<Input, Output> for SmartGen
+// where
+//     SmartGen: SmartGenerator<(), Output>,
+// {
+//     fn generate(&mut self, rand: &Rand, _input: Input) -> Output {
+//         self.generate(rand, ())
+//     }
+// }
