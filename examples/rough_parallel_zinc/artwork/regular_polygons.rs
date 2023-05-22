@@ -8,9 +8,9 @@ pub fn regular_polygons() -> RegularPolygons {
         resolution_generator: 3.into_smart_generator(),
         center_generator: pt2(0.5, 0.5).into_smart_generator(),
         stroke_weight_generator: 0.001.into_smart_generator(),
+        color_generator: Box::<OneColorGenerator>::new(soft_black().into()),
         polygon_is_filled_generator: false.into_smart_generator(),
         radius_generator: 0.001.into_smart_generator(),
-        color_generator: Box::<OneColorGenerator>::new(soft_black().into()),
     }
 }
 
