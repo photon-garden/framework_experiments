@@ -59,7 +59,7 @@ fn center() -> impl IntoGenerator<(), Point2> {
         .save_outputs(points)
 }
 
-fn context_center() -> ContextProviderWrapper<(), Point2> {
+fn context_center() -> ContextGenerator<(), Point2> {
     let max_distance = pt2(0.0, 0.0).distance(pt2(1.0, 1.0));
 
     context_uniform_random_xy()

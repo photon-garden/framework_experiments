@@ -11,24 +11,6 @@ where
     fn generate(&mut self, rand: &Rand, input: Input) -> Output;
 }
 
-pub struct ContextProviderWrapper<Input, Output>
-where
-    Input: 'static,
-    Output: Clone + 'static,
-{
-    pub context_provider: Box<dyn ContextProviderInterface<Input, Output>>,
-}
-
-impl<Input, Output> ContextProviderWrapper<Input, Output>
-where
-    Input: 'static,
-    Output: Clone + 'static,
-{
-    pub fn generate(&mut self, rand: &Rand, input: Input) -> Output {
-        self.context_provider.generate(rand, input)
-    }
-}
-
 impl<Input, Output, Context> ContextProviderInterface<Input, Output>
     for ContextProvider<Input, Output, Context>
 where
@@ -47,7 +29,7 @@ where
     Output: Clone + 'static,
     Context: Sized + 'static,
 {
-    pub generator: Box<dyn ContextGenerator<Input, Output, Context>>,
+    pub heart: Box<dyn GeneratorHeart<Input, Output, Context>>,
     pub context: Context,
     output_saver: OutputSaver<Output, Context>,
     input: PhantomData<Input>,
@@ -61,15 +43,15 @@ where
     Context: Sized + 'static,
 {
     pub fn new<Gen>(
-        generator: Gen,
+        heart: Gen,
         context: Context,
         output_saver: impl FnMut(&mut Context, Output) + 'static,
     ) -> Self
     where
-        Gen: ContextGenerator<Input, Output, Context> + Sized + 'static,
+        Gen: GeneratorHeart<Input, Output, Context> + Sized + 'static,
     {
         Self {
-            generator: generator.into_box(),
+            heart: heart.into_box(),
             context,
             output_saver: output_saver.into_box(),
             input: PhantomData,
@@ -83,7 +65,7 @@ where
             context: &self.context,
             input: &input,
         };
-        let output = self.generator.generate_with_context(&params);
+        let output = self.heart.generate_with_context(&params);
 
         let context = &mut self.context;
         (self.output_saver)(context, output.clone());
@@ -96,7 +78,7 @@ where
         filter: impl Fn(ContextFilterParams<Input, Output, Context>) -> bool + 'static,
     ) -> ContextProvider<Input, Output, Context> {
         ContextProvider {
-            generator: ContextFilterGenerator::new(self.generator, filter).into_box(),
+            heart: ContextFilterGenerator::new(self.heart, filter).into_box(),
             context: self.context,
             output_saver: self.output_saver,
             input: PhantomData,
@@ -104,24 +86,9 @@ where
         }
     }
 
-    pub fn wrap(self) -> ContextProviderWrapper<Input, Output> {
-        ContextProviderWrapper {
+    pub fn wrap(self) -> ContextGenerator<Input, Output> {
+        ContextGenerator {
             context_provider: self.into_box(),
         }
     }
 }
-
-// impl<Input, Output, Context> ContextGenerator<Input, Output, Context>
-//     for ContextProvider<Input, Output, Context>
-// where
-//     Input: 'static,
-//     Output: Clone + 'static,
-//     Context: Sized + 'static,
-// {
-//     fn generate_with_context(
-//         &mut self,
-//         params: &GenerateWithContextParams<Input, Context>,
-//     ) -> Output {
-//         self.generator.generate_with_context(params)
-//     }
-// }

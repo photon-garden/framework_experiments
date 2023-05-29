@@ -13,7 +13,7 @@ pub struct ContextUniformRandomPointGenerator {
     y_range: RangeInclusive<f32>,
 }
 
-impl<Context> ContextGenerator<(), Point2, Context> for ContextUniformRandomPointGenerator
+impl<Context> GeneratorHeart<(), Point2, Context> for ContextUniformRandomPointGenerator
 where
     Context: Sized + 'static,
 {

@@ -10,7 +10,7 @@ where
     Output: Clone + 'static,
     Context: Sized + 'static,
 {
-    generator: Box<dyn ContextGenerator<Input, Output, Context>>,
+    generator: Box<dyn GeneratorHeart<Input, Output, Context>>,
     filter: Filter<Input, Output, Context>,
     input: PhantomData<Input>,
     output: PhantomData<Output>,
@@ -24,7 +24,7 @@ where
     Context: Sized + 'static,
 {
     pub fn new(
-        generator: Box<dyn ContextGenerator<Input, Output, Context>>,
+        generator: Box<dyn GeneratorHeart<Input, Output, Context>>,
         filter: impl Fn(ContextFilterParams<Input, Output, Context>) -> bool + 'static,
     ) -> Self {
         Self {
@@ -37,7 +37,7 @@ where
     }
 }
 
-impl<Input, Output, Context> ContextGenerator<Input, Output, Context>
+impl<Input, Output, Context> GeneratorHeart<Input, Output, Context>
     for ContextFilterGenerator<Input, Output, Context>
 where
     Input: 'static,
@@ -75,7 +75,7 @@ pub struct ContextFilterParams<'a, Input, Output, Context>
 where
     Output: Clone,
 {
-    pub generator: &'a Box<dyn ContextGenerator<Input, Output, Context>>,
+    pub generator: &'a Box<dyn GeneratorHeart<Input, Output, Context>>,
     pub input: &'a Input,
     pub output: &'a Output,
     pub rand: &'a Rand,

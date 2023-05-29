@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-impl<Context> ContextGenerator<(), Point2, Context> for Point2
+impl<Context> GeneratorHeart<(), Point2, Context> for Point2
 where
     Context: Sized + 'static,
 {

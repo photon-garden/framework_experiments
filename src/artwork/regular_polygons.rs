@@ -24,7 +24,7 @@ pub struct RegularPolygons {
     background_color: Hsl,
     // Generators
     resolution_generator: BoxedGenerator<(), usize>,
-    center_generator: ContextProviderWrapper<(), Point2>,
+    center_generator: ContextGenerator<(), Point2>,
     stroke_weight_generator: BoxedGenerator<(), f32>,
     color_generator: BoxedGenerator<(), Hsl>,
     polygon_is_filled_generator: BoxedGenerator<(), bool>,
@@ -47,7 +47,7 @@ impl RegularPolygons {
         self
     }
 
-    pub fn center(mut self, center_generator: ContextProviderWrapper<(), Point2>) -> Self {
+    pub fn center(mut self, center_generator: ContextGenerator<(), Point2>) -> Self {
         self.center_generator = center_generator;
         self
     }
