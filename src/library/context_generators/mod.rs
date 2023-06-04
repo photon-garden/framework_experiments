@@ -7,6 +7,9 @@ pub use self::context_generator::*;
 pub mod context_bool_generator_hearts;
 pub use self::context_bool_generator_hearts::*;
 
+pub mod context_crystallized_generator_heart;
+pub use self::context_crystallized_generator_heart::*;
+
 pub mod context_f32_generator_hearts;
 pub use self::context_f32_generator_hearts::*;
 

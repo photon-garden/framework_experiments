@@ -22,17 +22,17 @@ where
         ContextProvider::new(self, context, save_context)
     }
 
-    fn map_input<'a, Mapper, NewInput>(
-        self,
-        mapper: Mapper,
-    ) -> ContextMapInputGeneratorHeart<'a, Self, Input, NewInput, Output, Context>
-    where
-        Self: Sized,
-        NewInput: Clone + 'static,
-        Mapper: Fn(&'a NewInput) -> Input + 'static,
-    {
-        ContextMapInputGeneratorHeart::new(self, mapper)
-    }
+    // fn map_input<'a, Mapper, NewInput>(
+    //     self,
+    //     mapper: Mapper,
+    // ) -> ContextMapInputGeneratorHeart<'a, Self, Input, NewInput, Output, Context>
+    // where
+    //     Self: Sized,
+    //     NewInput: Clone + 'static,
+    //     Mapper: Fn(&'a NewInput) -> Input + 'static,
+    // {
+    //     ContextMapInputGeneratorHeart::new(self, mapper)
+    // }
 
     fn map_output<Mapper, NewOutput>(
         self,
@@ -44,6 +44,13 @@ where
         Mapper: Fn(Output) -> NewOutput + 'static,
     {
         ContextMapOutputGeneratorHeart::new(self, mapper)
+    }
+
+    fn crystallize(self) -> ContextCrystallizedGeneratorHeart<Self, Input, Output, Context>
+    where
+        Self: Sized,
+    {
+        ContextCrystallizedGeneratorHeart::new(self)
     }
 }
 
