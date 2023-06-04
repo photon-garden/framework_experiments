@@ -11,7 +11,7 @@ pub fn regular_polygons() -> RegularPolygons {
         polygon_is_filled_generator: false.into_generator(),
         radius_generator: 0.001.into_generator(),
         color_generator: soft_black().into_generator(),
-        center_generator: context_uniform_random_xy().without_context().wrap(),
+        center_generator: context_uniform_random_xy().into_context_generator(),
     }
 }
 
@@ -47,8 +47,8 @@ impl RegularPolygons {
         self
     }
 
-    pub fn center(mut self, center_generator: ContextGenerator<(), Point2>) -> Self {
-        self.center_generator = center_generator;
+    pub fn center(mut self, center_generator: impl IntoContextGenerator<(), Point2>) -> Self {
+        self.center_generator = center_generator.into_context_generator();
         self
     }
 
@@ -84,10 +84,9 @@ impl Artwork for RegularPolygons {
         let resolution = self.resolution_generator.generate(rand, ());
         let stroke_weight = self.stroke_weight_generator.generate(rand, ());
 
-        let path =
-            crate::prelude::Path2::regular_polygon(&center, resolution, |_normalized_angle| {
-                self.radius_generator.generate(rand, ())
-            });
+        let path = Path2::regular_polygon(&center, resolution, |_normalized_angle| {
+            self.radius_generator.generate(rand, ())
+        });
 
         let color = self.color_generator.generate(rand, ());
 

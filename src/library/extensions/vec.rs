@@ -204,10 +204,11 @@ impl<'v, Element> Iterator for IterAdjacents<'v, Element> {
 }
 
 mod tests {
-    use super::*;
+    // Clippy doesn't recognize that this import is used, so we silence the warning.
+    #[allow(unused_imports)]
+    use super::VecExtension;
 
     #[test]
-
     fn test_weighted_get() {
         let vec = vec![25, 60, 15];
 

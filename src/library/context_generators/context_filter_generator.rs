@@ -53,7 +53,7 @@ where
         for _ in 0..num_tries {
             let output = self.generator.generate_with_context(params);
             let filter_params = ContextFilterParams {
-                generator: &self.generator,
+                generator: &*self.generator,
                 input: params.input,
                 output: &output,
                 rand: params.rand,
@@ -75,7 +75,7 @@ pub struct ContextFilterParams<'a, Input, Output, Context>
 where
     Output: Clone,
 {
-    pub generator: &'a Box<dyn GeneratorHeart<Input, Output, Context>>,
+    pub generator: &'a dyn GeneratorHeart<Input, Output, Context>,
     pub input: &'a Input,
     pub output: &'a Output,
     pub rand: &'a Rand,

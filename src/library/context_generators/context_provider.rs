@@ -85,10 +85,4 @@ where
             output: PhantomData,
         }
     }
-
-    pub fn wrap(self) -> ContextGenerator<Input, Output> {
-        ContextGenerator {
-            context_provider: self.into_box(),
-        }
-    }
 }

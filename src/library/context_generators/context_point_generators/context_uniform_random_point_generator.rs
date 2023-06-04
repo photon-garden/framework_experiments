@@ -35,3 +35,9 @@ impl ContextUniformRandomPointGenerator {
         self
     }
 }
+
+impl IntoContextGenerator<(), Point2> for ContextUniformRandomPointGenerator {
+    fn into_context_generator(self) -> ContextGenerator<(), Point2> {
+        ContextProvider::new(self, (), |_, _| {}).into_context_generator()
+    }
+}

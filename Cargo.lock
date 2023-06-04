@@ -1128,6 +1128,36 @@ dependencies = [
 ]
 
 [[package]]
+name = "generative_art"
+version = "0.1.0"
+dependencies = [
+ "arraymap",
+ "chrono",
+ "contour",
+ "criterion",
+ "duct",
+ "fast_poisson",
+ "flamegraph",
+ "flat_spatial",
+ "fs_extra",
+ "geo",
+ "geo-booleanop",
+ "itertools 0.10.1",
+ "markov",
+ "nannou",
+ "nanorand 0.7.0",
+ "once_cell",
+ "ordered-float 3.0.0",
+ "pigment-mixing",
+ "rayon",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "spade",
+ "tap",
+]
+
+[[package]]
 name = "geo"
 version = "0.23.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2459,36 +2489,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "photon_garden"
-version = "0.1.0"
-dependencies = [
- "arraymap",
- "chrono",
- "contour",
- "criterion",
- "duct",
- "fast_poisson",
- "flamegraph",
- "flat_spatial",
- "fs_extra",
- "geo",
- "geo-booleanop",
- "itertools 0.10.1",
- "markov",
- "nannou",
- "nanorand 0.7.0",
- "once_cell",
- "ordered-float 3.0.0",
- "pigment-mixing",
- "rayon",
- "reqwest",
- "serde",
- "serde_json",
- "spade",
- "tap",
-]
-
-[[package]]
 name = "pigment-mixing"
 version = "0.1.0"
 source = "git+https://github.com/virtualritz/pigment-mixing-rs#41cb7bb4bd16e8614d834d1ef436f7559d5f1bc3"
@@ -2610,11 +2610,11 @@ dependencies = [
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.32"
+version = "1.0.59"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ba508cc11742c0dc5c1659771673afbab7a0efab23aa17e854cbab0837ed0b43"
+checksum = "6aeca18b86b413c660b781aa319e4e2648a3e6f9eadc9b47e9038e6fe9f3451b"
 dependencies = [
- "unicode-xid",
+ "unicode-ident",
 ]
 
 [[package]]
@@ -2634,9 +2634,9 @@ dependencies = [
 
 [[package]]
 name = "quote"
-version = "1.0.10"
+version = "1.0.28"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "38bc8cc6a5f2e3655e0899c1b848643b2562f853f114bfec7be120678e3ace05"
+checksum = "1b9ab9c7eadfd8df19006f1cf1a4aed13540ed5cbc047010ece5826e10825488"
 dependencies = [
  "proc-macro2",
 ]
@@ -3468,6 +3468,12 @@ name = "unicode-bidi"
 version = "0.3.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "099b7128301d285f79ddd55b9a83d5e6b9e97c92e0ea0daebee7263e932de992"
+
+[[package]]
+name = "unicode-ident"
+version = "1.0.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b15811caf2415fb889178633e7724bad2509101cde276048e013b9def5e51fa0"
 
 [[package]]
 name = "unicode-normalization"

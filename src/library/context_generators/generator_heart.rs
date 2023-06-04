@@ -23,26 +23,40 @@ where
     }
 }
 
-pub trait IntoEmptyContextProvider<Input, Output>: GeneratorHeart<Input, Output, ()>
+pub trait IntoEmptyContextGenerator<Input, Output>
 where
     Input: 'static,
     Output: Clone + 'static,
 {
     fn without_context(self) -> ContextProvider<Input, Output, ()>
     where
-        Self: Sized + 'static,
-    {
-        ContextProvider::new(self, (), |_, _| {})
-    }
+        Self: Sized + 'static;
+
+    fn into_context_generator(self) -> ContextGenerator<Input, Output>
+    where
+        Self: Sized + 'static;
 }
 
-impl<Input, Output, Gen> IntoEmptyContextProvider<Input, Output> for Gen
-where
-    Input: 'static,
-    Output: Clone + 'static,
-    Gen: GeneratorHeart<Input, Output, ()> + 'static + Sized,
-{
-}
+// impl<Input, Output, Gen> IntoEmptyContextGenerator<Input, Output> for Gen
+// where
+//     Input: 'static,
+//     Output: Clone + 'static,
+//     Gen: GeneratorHeart<Input, Output, ()> + 'static + Sized,
+// {
+//     fn without_context(self) -> ContextProvider<Input, Output, ()>
+//     where
+//         Self: Sized + 'static,
+//     {
+//         ContextProvider::new(self, (), |_, _| {})
+//     }
+
+//     fn into_context_generator(self) -> ContextGenerator<Input, Output>
+//     where
+//         Self: Sized + 'static,
+//     {
+//         self.without_context().into_context_generator()
+//     }
+// }
 
 pub struct GenerateWithContextParams<'a, Input, Context> {
     pub rand: &'a Rand,

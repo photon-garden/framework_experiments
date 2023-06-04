@@ -1,7 +1,7 @@
 [package]
-name = "photon_garden"
+name = "generative_art"
 version = "0.1.0"
-authors = ["Luca <thomas@noisemachines.io>"]
+authors = ["Luca <mail@photon.garden>"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
