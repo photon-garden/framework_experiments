@@ -21,6 +21,30 @@ where
     {
         ContextProvider::new(self, context, save_context)
     }
+
+    fn map_input<'a, Mapper, NewInput>(
+        self,
+        mapper: Mapper,
+    ) -> ContextMapInputGeneratorHeart<'a, Self, Input, NewInput, Output, Context>
+    where
+        Self: Sized,
+        NewInput: Clone + 'static,
+        Mapper: Fn(&'a NewInput) -> Input + 'static,
+    {
+        ContextMapInputGeneratorHeart::new(self, mapper)
+    }
+
+    fn map_output<Mapper, NewOutput>(
+        self,
+        mapper: Mapper,
+    ) -> ContextMapOutputGeneratorHeart<Self, Input, Output, NewOutput, Context>
+    where
+        Self: Sized,
+        NewOutput: Clone + 'static,
+        Mapper: Fn(Output) -> NewOutput + 'static,
+    {
+        ContextMapOutputGeneratorHeart::new(self, mapper)
+    }
 }
 
 pub trait WithoutContext<Input, Output>
@@ -47,7 +71,7 @@ where
     where
         Self: Sized + 'static,
     {
-        ContextProvider::new(self, (), |_, _| {})
+        self.with_context((), |_, _| {})
     }
 
     // fn into_context_generator(self) -> ContextGenerator<Input, Output>

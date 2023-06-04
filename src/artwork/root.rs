@@ -89,13 +89,13 @@ fn context_center() -> impl IntoContextGenerator<(), Point2> {
         })
 }
 
-fn radius() -> impl IntoGenerator<(), f32> {
+fn radius() -> impl IntoContextGenerator<(), f32> {
     // sine()
     //     .frequency(1.0)
     //     .denormalize_generator(0.003, 0.019)
     //     .map_input(|xy: Point2| xy.y)
     // |_: &Rand, xy: Point2| xy.y.denormalize(0.003, 0.019)
-    random_f32()
+    context_uniform_random_f32()
         .denormalize_generator(0.005, 0.015)
         .crystallize()
 }

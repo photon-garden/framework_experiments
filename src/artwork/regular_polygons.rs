@@ -9,7 +9,7 @@ pub fn regular_polygons() -> RegularPolygons {
         resolution_generator: 3.into_context_generator(),
         stroke_weight_generator: 0.001.into_context_generator(),
         polygon_is_filled_generator: false.into_context_generator(),
-        radius_generator: 0.001.into_generator(),
+        radius_generator: 0.001.into_context_generator(),
         color_generator: soft_black().into_context_generator(),
         center_generator: context_uniform_random_xy().into_context_generator(),
     }
@@ -28,7 +28,7 @@ pub struct RegularPolygons {
     stroke_weight_generator: ContextGenerator<(), f32>,
     color_generator: ContextGenerator<(), Hsl>,
     polygon_is_filled_generator: ContextGenerator<(), bool>,
-    radius_generator: BoxedGenerator<(), f32>,
+    radius_generator: ContextGenerator<(), f32>,
 }
 
 impl RegularPolygons {
@@ -76,8 +76,11 @@ impl RegularPolygons {
         self
     }
 
-    pub fn radius(mut self, radius_generator: impl IntoGenerator<(), f32>) -> RegularPolygons {
-        self.radius_generator = radius_generator.into_generator();
+    pub fn radius(
+        mut self,
+        radius_generator: impl IntoContextGenerator<(), f32>,
+    ) -> RegularPolygons {
+        self.radius_generator = radius_generator.into_context_generator();
         self
     }
 }

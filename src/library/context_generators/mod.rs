@@ -13,6 +13,12 @@ pub use self::context_f32_generator_hearts::*;
 pub mod context_hsl_generator_hearts;
 pub use self::context_hsl_generator_hearts::*;
 
+pub mod context_map_input_generator_heart;
+pub use self::context_map_input_generator_heart::*;
+
+pub mod context_map_output_generator_heart;
+pub use self::context_map_output_generator_heart::*;
+
 pub mod context_point_generator_hearts;
 pub use self::context_point_generator_hearts::*;
 
