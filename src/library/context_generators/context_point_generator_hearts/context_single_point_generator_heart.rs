@@ -17,3 +17,9 @@ impl IntoContextGenerator<(), Point2> for Point2 {
         self.without_context().into_context_generator()
     }
 }
+
+impl Default for ContextGenerator<(), Point2> {
+    fn default() -> Self {
+        pt2(0.5, 0.5).into_context_generator()
+    }
+}

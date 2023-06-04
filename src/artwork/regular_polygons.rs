@@ -7,8 +7,8 @@ pub fn regular_polygons() -> RegularPolygons {
 
         // Generators
         resolution_generator: 3.into_context_generator(),
-        stroke_weight_generator: 0.001.into_generator(),
-        polygon_is_filled_generator: false.into_generator(),
+        stroke_weight_generator: 0.001.into_context_generator(),
+        polygon_is_filled_generator: false.into_context_generator(),
         radius_generator: 0.001.into_generator(),
         color_generator: soft_black().into_generator(),
         center_generator: context_uniform_random_xy().into_context_generator(),
@@ -25,9 +25,9 @@ pub struct RegularPolygons {
     // Generators
     resolution_generator: ContextGenerator<(), usize>,
     center_generator: ContextGenerator<(), Point2>,
-    stroke_weight_generator: BoxedGenerator<(), f32>,
+    stroke_weight_generator: ContextGenerator<(), f32>,
     color_generator: BoxedGenerator<(), Hsl>,
-    polygon_is_filled_generator: BoxedGenerator<(), bool>,
+    polygon_is_filled_generator: ContextGenerator<(), bool>,
     radius_generator: BoxedGenerator<(), f32>,
 }
 
@@ -55,8 +55,11 @@ impl RegularPolygons {
         self
     }
 
-    pub fn stroke_weight(mut self, stroke_weight_generator: impl IntoGenerator<(), f32>) -> Self {
-        self.stroke_weight_generator = stroke_weight_generator.into_generator();
+    pub fn stroke_weight(
+        mut self,
+        stroke_weight_generator: impl IntoContextGenerator<(), f32>,
+    ) -> Self {
+        self.stroke_weight_generator = stroke_weight_generator.into_context_generator();
         self
     }
 
@@ -67,9 +70,9 @@ impl RegularPolygons {
 
     pub fn polygon_is_filled(
         mut self,
-        polygon_is_filled_generator: impl IntoGenerator<(), bool>,
+        polygon_is_filled_generator: impl IntoContextGenerator<(), bool>,
     ) -> RegularPolygons {
-        self.polygon_is_filled_generator = polygon_is_filled_generator.into_generator();
+        self.polygon_is_filled_generator = polygon_is_filled_generator.into_context_generator();
         self
     }
 

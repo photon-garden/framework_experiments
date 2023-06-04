@@ -9,7 +9,7 @@ pub fn create(_params: CreateArtworkParams) -> RegularPolygons {
 
     regular_polygons()
         .num_repeats(1000)
-        .resolution(context_uniform_random_usize(5, 25).without_context())
+        .resolution(context_uniform_random_usize(5, 25))
         // .resolution(25)
         .stroke_weight(0.001)
         .color(
@@ -20,7 +20,7 @@ pub fn create(_params: CreateArtworkParams) -> RegularPolygons {
         )
         .radius(radius())
         .center(context_center())
-        .polygon_is_filled(flip_coin(0.5))
+        .polygon_is_filled(context_uniform_random_bool(0.5))
 }
 
 fn center() -> impl IntoGenerator<(), Point2> {
