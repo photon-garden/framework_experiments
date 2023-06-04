@@ -13,7 +13,7 @@ pub fn create(_params: CreateArtworkParams) -> RegularPolygons {
         // .resolution(25)
         .stroke_weight(0.001)
         .color(
-            looped_colors()
+            context_looped_hsl()
                 .color_picker(252, 197, 102, 255)
                 .color_picker(254, 162, 151, 255)
                 .color_picker(164, 222, 251, 255),

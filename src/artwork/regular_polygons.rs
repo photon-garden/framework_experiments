@@ -10,7 +10,7 @@ pub fn regular_polygons() -> RegularPolygons {
         stroke_weight_generator: 0.001.into_context_generator(),
         polygon_is_filled_generator: false.into_context_generator(),
         radius_generator: 0.001.into_generator(),
-        color_generator: soft_black().into_generator(),
+        color_generator: soft_black().into_context_generator(),
         center_generator: context_uniform_random_xy().into_context_generator(),
     }
 }
@@ -26,7 +26,7 @@ pub struct RegularPolygons {
     resolution_generator: ContextGenerator<(), usize>,
     center_generator: ContextGenerator<(), Point2>,
     stroke_weight_generator: ContextGenerator<(), f32>,
-    color_generator: BoxedGenerator<(), Hsl>,
+    color_generator: ContextGenerator<(), Hsl>,
     polygon_is_filled_generator: ContextGenerator<(), bool>,
     radius_generator: BoxedGenerator<(), f32>,
 }
@@ -63,8 +63,8 @@ impl RegularPolygons {
         self
     }
 
-    pub fn color(mut self, color_generator: impl IntoGenerator<(), Hsl>) -> RegularPolygons {
-        self.color_generator = color_generator.into_generator();
+    pub fn color(mut self, color_generator: impl IntoContextGenerator<(), Hsl>) -> RegularPolygons {
+        self.color_generator = color_generator.into_context_generator();
         self
     }
 
