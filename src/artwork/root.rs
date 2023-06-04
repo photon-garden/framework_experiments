@@ -9,7 +9,7 @@ pub fn create(_params: CreateArtworkParams) -> RegularPolygons {
 
     regular_polygons()
         .num_repeats(1000)
-        .resolution(random_usize(5, 25))
+        .resolution(context_uniform_random_usize(5, 25).without_context())
         // .resolution(25)
         .stroke_weight(0.001)
         .color(

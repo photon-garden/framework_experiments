@@ -1,19 +1,19 @@
 use crate::prelude::*;
 use std::ops::RangeInclusive;
 
-pub fn context_uniform_random_xy() -> ContextUniformRandomPointGenerator {
-    ContextUniformRandomPointGenerator {
+pub fn context_uniform_random_xy() -> ContextUniformRandomPoint {
+    ContextUniformRandomPoint {
         x_range: 0.0..=1.0,
         y_range: 0.0..=1.0,
     }
 }
 
-pub struct ContextUniformRandomPointGenerator {
+pub struct ContextUniformRandomPoint {
     x_range: RangeInclusive<f32>,
     y_range: RangeInclusive<f32>,
 }
 
-impl<Context> GeneratorHeart<(), Point2, Context> for ContextUniformRandomPointGenerator
+impl<Context> GeneratorHeart<(), Point2, Context> for ContextUniformRandomPoint
 where
     Context: Sized + 'static,
 {
@@ -24,7 +24,7 @@ where
     }
 }
 
-impl ContextUniformRandomPointGenerator {
+impl ContextUniformRandomPoint {
     pub fn x_range(mut self, x_range: RangeInclusive<f32>) -> Self {
         self.x_range = x_range;
         self
@@ -36,8 +36,8 @@ impl ContextUniformRandomPointGenerator {
     }
 }
 
-impl IntoContextGenerator<(), Point2> for ContextUniformRandomPointGenerator {
+impl IntoContextGenerator<(), Point2> for ContextUniformRandomPoint {
     fn into_context_generator(self) -> ContextGenerator<(), Point2> {
-        ContextProvider::new(self, (), |_, _| {}).into_context_generator()
+        self.without_context().into_context_generator()
     }
 }

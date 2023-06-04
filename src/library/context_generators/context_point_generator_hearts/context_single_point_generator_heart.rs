@@ -11,3 +11,9 @@ where
         *self
     }
 }
+
+impl IntoContextGenerator<(), Point2> for Point2 {
+    fn into_context_generator(self) -> ContextGenerator<(), Self> {
+        self.without_context().into_context_generator()
+    }
+}
