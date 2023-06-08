@@ -1,7 +1,7 @@
 use crate::prelude::*;
 
-pub fn context_grid_xy() -> ContextGridPointGeneratorHeart {
-    ContextGridPointGeneratorHeart {
+pub fn grid_xy() -> GridPointGenerator {
+    GridPointGenerator {
         x_resolution: 4,
         y_resolution: 4,
         x_index: 0,
@@ -10,7 +10,7 @@ pub fn context_grid_xy() -> ContextGridPointGeneratorHeart {
     }
 }
 
-pub struct ContextGridPointGeneratorHeart {
+pub struct GridPointGenerator {
     x_resolution: usize,
     y_resolution: usize,
     x_index: usize,
@@ -18,27 +18,10 @@ pub struct ContextGridPointGeneratorHeart {
     traverse: Traverse,
 }
 
-#[derive(Clone, Debug)]
-pub struct GridPoint2 {
-    pub x_index: usize,
-    pub y_index: usize,
-    pub xy: Point2,
-}
-
-impl<Input, Context> GeneratorHeart<Input, GridPoint2, Context> for ContextGridPointGeneratorHeart
-where
-    Input: 'static,
-    Context: Sized + 'static,
-{
-    fn generate_with_context(
-        &mut self,
-        _params: &GenerateWithContextParams<Input, Context>,
-    ) -> GridPoint2 {
-        let x_index = self.x_index;
-        let y_index = self.y_index;
-
-        let x = x_index as f32 / (self.x_resolution - 1) as f32;
-        let y = y_index as f32 / (self.y_resolution - 1) as f32;
+impl Generator<(), Point2> for GridPointGenerator {
+    fn generate(&mut self, _rand: &Rand, _input: ()) -> Point2 {
+        let x = self.x_index as f32 / (self.x_resolution - 1) as f32;
+        let y = self.y_index as f32 / (self.y_resolution - 1) as f32;
 
         match self.traverse {
             Traverse::RowByRow => {
@@ -64,15 +47,11 @@ where
             }
         }
 
-        GridPoint2 {
-            x_index,
-            y_index,
-            xy: pt2(x, y),
-        }
+        pt2(x, y)
     }
 }
 
-impl ContextGridPointGeneratorHeart {
+impl GridPointGenerator {
     pub fn x_resolution(mut self, x_resolution: usize) -> Self {
         self.x_resolution = x_resolution;
         self
@@ -97,13 +76,4 @@ impl ContextGridPointGeneratorHeart {
 enum Traverse {
     RowByRow,
     ColumnByColumn,
-}
-
-impl<Input> IntoContextGenerator<Input, GridPoint2> for ContextGridPointGeneratorHeart
-where
-    Input: 'static,
-{
-    fn into_context_generator(self) -> ContextGenerator<Input, GridPoint2> {
-        self.without_context().into_context_generator()
-    }
 }
